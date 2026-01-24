@@ -74,6 +74,10 @@ Once the plugin is installed and configured:
 2. Players will see the configured join, leave, and first join messages in the chat.
 3. If enabled, players will also see a welcome title upon joining the server.
 
+## Credits
+
+This plugin uses the [TinyMessage](https://github.com/Zoltus/TinyMessage) library for advanced chat formatting. Special thanks to [Zoltus](https://github.com/Zoltus) for their work on this library.
+
 ## Contributing
 
 Contributions are welcome! Feel free to fork this repository, make changes, and submit a pull request. Please ensure your code follows the project's coding standards.
@@ -85,4 +89,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Support
 
 If you encounter any issues or have questions, please open an issue on the [GitHub repository](https://github.com/myattaw/).
-
