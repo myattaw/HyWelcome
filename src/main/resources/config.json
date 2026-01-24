@@ -1,0 +1,21 @@
+{
+  "settings": {
+    "enabled": true,
+    "firstJoinMessage": true,
+    "titleOnJoin": true
+  },
+  "messages": {
+    "join": "<green>[+]</green> <gold>The player <bold>{player}</bold> has joined the server!</gold>",
+    "leave": "<red>[-]</red> <gold>The player <bold>{player}</bold> has left the server!</gold>",
+    "firstJoin": "<green>[+]</green> <gold>The player <bold>{player}</bold> joined for the first time!</gold>",
+
+    "titleMessage": "Welcome",
+    "titleSubMessage": "Enjoy your stay, {player}!"
+  },
+  "title": {
+    "fadeInSeconds": 1.2,
+    "staySeconds": 3.0,
+    "fadeOutSeconds": 1.2,
+    "playSound": false
+  }
+}

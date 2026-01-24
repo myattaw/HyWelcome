@@ -1,0 +1,16 @@
+{
+  "Group": "ReliablePlugins",
+  "Name": "HyWelcome",
+  "Version": "1.0.0",
+  "Authors": [
+    {
+      "Name": "Rages",
+      "Url": "https://github.com/myattaw/"
+    }
+  ],
+  "Website": "https://github.com/myattaw/",
+  "Description": "A simple welcome plugin for Hytale servers.",
+  "Main": "com.reliableplugins.welcome.HyWelcomePlugin",
+  "ServerVersion": "*",
+  "IncludesAssetPack": true
+}
