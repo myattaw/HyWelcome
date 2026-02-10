@@ -13,6 +13,7 @@ public final class HyWelcomeConfig {
 
     private static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
+            .disableHtmlEscaping()
             .create();
 
     public Settings settings = new Settings();

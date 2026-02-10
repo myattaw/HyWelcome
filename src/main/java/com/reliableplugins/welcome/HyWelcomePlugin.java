@@ -1,6 +1,7 @@
 package com.reliableplugins.welcome;
 
 import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.ServerMessage;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
@@ -107,11 +108,14 @@ public class HyWelcomePlugin extends JavaPlugin {
 
         Player player = event.getPlayer();
 
-        Ref<EntityStore> ref = event.getPlayerRef();
-        PlayerRef playerRef = ref.getStore().getComponent(ref, PlayerRef.getComponentType());
-        if (playerRef == null) return;
 
-        UUID uuid = playerRef.getUuid();
+        Ref<EntityStore> ref = event.getPlayerRef();
+        Store<EntityStore> store = ref.getStore();
+
+        UUIDComponent uuidComp = store.getComponent(ref, UUIDComponent.getComponentType());
+        if (uuidComp == null) return;
+
+        UUID uuid = uuidComp.getUuid();
 
         // cooldown
         long now = System.currentTimeMillis();
@@ -129,34 +133,39 @@ public class HyWelcomePlugin extends JavaPlugin {
 
         String joinMsg = rawJoinMsg.replace("{player}", player.getDisplayName());
 
-        playerRef.sendMessage(TinyMsg.parse(joinMsg));
+        PlayerRef playerRef = Universe.get().getPlayer(uuid);
 
-        // show title
-        if (config.settings.titleOnJoin) {
-            String titleRaw = config.messages.titleMessage.replace("{player}", player.getDisplayName());
-            String subRaw = config.messages.titleSubMessage.replace("{player}", player.getDisplayName());
+        if (playerRef == null) return;
 
-            Message titleMsg = TinyMsg.parse(titleRaw);
-            Message subMsg = TinyMsg.parse(subRaw);
+        store.getExternalData().getWorld().execute(() -> {
+            playerRef.sendMessage(TinyMsg.parse(joinMsg));
 
-            EventTitleUtil.showEventTitleToPlayer(
-                    playerRef,
-                    subMsg,
-                    titleMsg,
-                    true,
-                    null,
-                    (float) config.title.staySeconds,
-                    (float) config.title.fadeInSeconds,
-                    (float) config.title.fadeOutSeconds
-            );
-        }
+            // show title
+            if (config.settings.titleOnJoin) {
+                String titleRaw = config.messages.titleMessage.replace("{player}", player.getDisplayName());
+                String subRaw = config.messages.titleSubMessage.replace("{player}", player.getDisplayName());
+
+                Message titleMsg = TinyMsg.parse(titleRaw);
+                Message subMsg = TinyMsg.parse(subRaw);
+
+                EventTitleUtil.showEventTitleToPlayer(
+                        playerRef,
+                        subMsg,
+                        titleMsg,
+                        true,
+                        null,
+                        (float) config.title.staySeconds,
+                        (float) config.title.fadeInSeconds,
+                        (float) config.title.fadeOutSeconds
+                );
+            }
+        });
     }
 
     private void onPlayerLeave(PlayerDisconnectEvent event) {
         if (!config.settings.enabled) return;
 
         PlayerRef playerRef = event.getPlayerRef();
-        if (playerRef == null) return;
 
         String raw = config.messages.leave;
         String msg = raw.replace("{player}", playerRef.getUsername());
